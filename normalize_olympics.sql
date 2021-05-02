@@ -37,6 +37,27 @@ CREATE TABLE staging.noc_regions (
     notes VARCHAR
 )
 
+-- data imported with psql shell using \copy command
+
 -- preview data
 SELECT * FROM staging.data LIMIT 5;
 SELECT * FROM staging.noc_regions LIMIT 5;
+
+-- the columns height, weight, age and medal contain 'NA' values
+-- convert them to NULL
+UPDATE staging.data 
+SET height = NULL
+WHERE height = 'NA';
+
+UPDATE staging.data 
+SET weight = NULL
+WHERE weight = 'NA';
+
+UPDATE staging.data 
+SET age = NULL
+WHERE age = 'NA';
+
+UPDATE staging.data 
+SET medal = NULL
+WHERE medal = 'NA';
+
