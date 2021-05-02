@@ -61,3 +61,42 @@ UPDATE staging.data
 SET medal = NULL
 WHERE medal = 'NA';
 
+-- create tables to store the data
+CREATE TABLE athletes (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR,
+    middle_name VARCHAR,
+    last_name VARCHAR,
+    height DECIMAL, -- chose decimal for use in later calculations such as BMI
+    weight DECIMAL,
+    age INTEGER,
+    sex CHAR(1),
+    noc VARCHAR
+);
+
+CREATE TABLE sports (
+    sport_id SERIAL PRIMARY KEY,
+    sport_name VARCHAR
+);
+
+CREATE TABLE events (
+    event_id SERIAL PRIMARY KEY,
+    event_name VARCHAR
+);
+
+CREATE TABLE olympics (
+    id SERIAL PRIMARY KEY,
+    city VARCHAR,
+    year year,
+    season VARCHAR
+);
+
+CREATE TABLE regions (
+    code VARCHAR PRIMARY KEY,
+    region VARCHAR
+);
+
+CREATE TABLE medals (
+    medal_id INTEGER PRIMARY KEY,
+    medal_name VARCHAR
+)
