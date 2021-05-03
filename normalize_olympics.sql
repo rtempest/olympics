@@ -62,6 +62,7 @@ SET medal = NULL
 WHERE medal = 'NA';
 
 -- create tables to store the data
+DROP TABLE IF EXISTS athletes;
 CREATE TABLE athletes (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR,
@@ -74,29 +75,42 @@ CREATE TABLE athletes (
     noc VARCHAR
 );
 
+DROP TABLE IF EXISTS sports;
 CREATE TABLE sports (
-    sport_id SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     sport_name VARCHAR
 );
 
-CREATE TABLE events (
-    event_id SERIAL PRIMARY KEY,
-    event_name VARCHAR
+DROP TABLE IF EXISTS ref_events;
+CREATE TABLE ref_events (
+    id SERIAL PRIMARY KEY,
+    event_name VARCHAR,
+    sport_id INTEGER
 );
 
+DROP TABLE IF EXISTS olympics;
 CREATE TABLE olympics (
     id SERIAL PRIMARY KEY,
     city VARCHAR,
-    year year,
+    year INTEGER,
     season VARCHAR
 );
 
+DROP TABLE IF EXISTS regions;
 CREATE TABLE regions (
     code VARCHAR PRIMARY KEY,
     region VARCHAR
 );
 
+DROP TABLE IF EXISTS medals;
 CREATE TABLE medals (
     medal_id INTEGER PRIMARY KEY,
     medal_name VARCHAR
+);
+
+-- create linking tables
+CREATE TABLE events (
+    id SERIAL PRIMARY KEY
+    event_id INTEGER,
+    olympic_id INTEGER
 )
