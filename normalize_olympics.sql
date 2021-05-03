@@ -72,7 +72,7 @@ CREATE TABLE athletes (
     weight DECIMAL,
     age INTEGER,
     sex CHAR(1),
-    noc VARCHAR
+    team_code VARCHAR REFERENCES teams(code)
 );
 
 DROP TABLE IF EXISTS sports;
@@ -85,7 +85,7 @@ DROP TABLE IF EXISTS ref_events;
 CREATE TABLE ref_events (
     id SERIAL PRIMARY KEY,
     event_name VARCHAR,
-    sport_id INTEGER
+    sport_id INTEGER REFERENCES sports(id)
 );
 
 DROP TABLE IF EXISTS olympics;
@@ -93,24 +93,45 @@ CREATE TABLE olympics (
     id SERIAL PRIMARY KEY,
     city VARCHAR,
     year INTEGER,
-    season VARCHAR
+    season_id INTEGER REFERENCES seasons(id)
 );
 
-DROP TABLE IF EXISTS regions;
-CREATE TABLE regions (
+DROP TABLE IF EXISTS teams;
+CREATE TABLE teams (
     code VARCHAR PRIMARY KEY,
-    region VARCHAR
+    name VARCHAR
 );
 
 DROP TABLE IF EXISTS medals;
 CREATE TABLE medals (
-    medal_id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     medal_name VARCHAR
 );
 
+DROP TABLE IF EXISTS seasons;
+CREATE TABLE seasons (
+    id INTEGER PRIMARY KEY,
+    season_name VARCHAR
+);
+
 -- create linking tables
+DROP TABLE IF EXISTS events;
 CREATE TABLE events (
-    id SERIAL PRIMARY KEY
-    event_id INTEGER,
-    olympic_id INTEGER
-)
+    id SERIAL PRIMARY KEY,
+    event_id INTEGER REFERENCES ref_events(id),
+    olympic_id INTEGER REFERENCES olympics(id)
+);
+
+DROP TABLE IF EXISTS athletes_events;
+CREATE TABLE athletes_events (
+    id SERIAL PRIMARY KEY,
+    events_id INTEGER REFERENCES events(id),
+    athlete_id INTEGER REFERENCES athletes(id)
+);
+
+DROP TABLE IF EXISTS medals_won;
+CREATE TABLE medals_won (
+    id SERIAL PRIMARY KEY,
+    medal_id INTEGER REFERENCES medals(id),
+    athlete_event_id INTEGER REFERENCES athletes_events(id)
+);
